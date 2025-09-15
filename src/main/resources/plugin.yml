@@ -1,0 +1,4 @@
+name: PlexDuels
+version: '1.0'
+main: dev.kai.PlexDuels
+api-version: '1.21'
