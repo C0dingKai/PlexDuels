@@ -2,10 +2,7 @@ package dev.kai.manager;
 
 import dev.kai.PlexDuels;
 import dev.kai.utility.LocationUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -82,6 +79,19 @@ public class DuelManager {
         }
     }
 
+    public void endDuel(Player winner, Player loser) {
+        Duel duel = activeDuels.get(winner.getUniqueId());
+        if (duel != null) {
+            duel.winner = winner;
+            duel.loser = loser;
+            duel.isActive = false;
+            winner.teleport(duel.pos1);
+            loser.teleport(duel.pos2);
+            activeDuels.remove(duel.player1.getUniqueId());
+            activeDuels.remove(duel.player2.getUniqueId());
+        }
+    }
+
     public static class Duel {
         public Player player1, player2;
         public Location pos1, pos2;
@@ -127,15 +137,23 @@ public class DuelManager {
                 graceTask = null;
             }
 
-            player1.teleport(pos1);
-            player2.teleport(pos2);
+            if (loser != null && loser.isOnline() && loser.getGameMode() == GameMode.SPECTATOR) {
+                loser.setGameMode(GameMode.SURVIVAL);
+            }
 
-            player1.stopSound(Sound.MUSIC_DISC_RELIC);
-            player2.stopSound(Sound.MUSIC_DISC_RELIC);
+            if (player1 != null && player1.isOnline()) {
+                player1.teleport(pos1);
+                player1.stopSound(Sound.MUSIC_DISC_RELIC);
+            }
+            if (player2 != null && player2.isOnline()) {
+                player2.teleport(pos2);
+                player2.stopSound(Sound.MUSIC_DISC_RELIC);
+            }
 
             DuelManager.getInstance().activeDuels.remove(player1.getUniqueId());
             DuelManager.getInstance().activeDuels.remove(player2.getUniqueId());
         }
+
 
         public boolean isInGracePeriod() { return !isActive && winner != null; }
     }

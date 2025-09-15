@@ -3,10 +3,10 @@ package dev.kai.commands;
 import dev.kai.manager.DuelManager;
 import dev.kai.manager.DuelManager.Duel;
 import dev.kai.utility.ColorUtil;
+import org.bukkit.entity.Player;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class LeaveCommand implements CommandExecutor {
@@ -18,6 +18,7 @@ public class LeaveCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
         if (!(sender instanceof Player player)) return true;
+
         DuelManager manager = DuelManager.getInstance();
         Duel duel = manager.getDuel(player);
 
@@ -31,11 +32,17 @@ public class LeaveCommand implements CommandExecutor {
             return true;
         }
 
-        manager.removeDuel(player);
-        player.sendMessage(ColorUtil.parse("<gray>You left the duel."));
+        // TODO: Fix so that if a player leaves during grace period, the other player should't leave
+
+        duel.endGracePeriod();
+
         Player opponent = duel.getOpponent(player);
-        if (opponent != null && opponent.isOnline())
-            opponent.sendMessage(ColorUtil.parse("<gray>" + player.getName() + " left the duel."));
+
+        player.sendMessage(ColorUtil.parse("<gray>You left the duel."));
+        if (opponent != null && opponent.isOnline()) {
+            opponent.sendMessage(ColorUtil.parse("<gray>" + player.getName() + " left the duel. The duel has ended."));
+        }
+
         return true;
     }
 }

@@ -5,6 +5,7 @@ import dev.kai.commands.DrawCommand;
 import dev.kai.commands.DuelCommand;
 import dev.kai.commands.LeaveCommand;
 import dev.kai.listener.DuelCommandListener;
+import dev.kai.listener.DuelListener;
 import dev.kai.manager.DuelManager;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -25,6 +26,7 @@ public final class PlexDuels extends JavaPlugin {
         new LeaveCommand(this);
         new DrawCommand(this);
         new DuelCommandListener(this);
+        new DuelListener(this);
     }
 
     @Override
