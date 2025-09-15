@@ -100,8 +100,8 @@ public class DuelManager {
 
         public void startGracePeriod() {
             Bukkit.getScheduler().runTask(PlexDuels.getInstance(), () -> {
-                player1.playSound(player1.getLocation(), Sound.MUSIC_DISC_13, 1f, 1f);
-                player2.playSound(player2.getLocation(), Sound.MUSIC_DISC_13, 1f, 1f);
+                player1.playSound(player1.getLocation(), Sound.MUSIC_DISC_RELIC, 1f, 1f);
+                player2.playSound(player2.getLocation(), Sound.MUSIC_DISC_RELIC, 1f, 1f);
             });
 
             new BukkitRunnable() {
@@ -111,6 +111,10 @@ public class DuelManager {
                     if (time <= 0 || (!player1.isOnline() && !player2.isOnline())) {
                         player1.teleport(pos1);
                         player2.teleport(pos2);
+
+                        player1.stopSound(Sound.MUSIC_DISC_RELIC);
+                        player2.stopSound(Sound.MUSIC_DISC_RELIC);
+
                         DuelManager.getInstance().activeDuels.remove(player1.getUniqueId());
                         DuelManager.getInstance().activeDuels.remove(player2.getUniqueId());
                         cancel();

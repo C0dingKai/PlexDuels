@@ -1,6 +1,7 @@
 package dev.kai.listener;
 
 import dev.kai.manager.DuelManager;
+import dev.kai.manager.DuelManager.Duel;
 import dev.kai.utility.ColorUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,8 +20,9 @@ public class DuelCommandListener implements Listener {
     @EventHandler
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
+        Duel duel = DuelManager.getInstance().getDuel(player);
 
-        if (DuelManager.getInstance().isInDuel(player)) {
+        if (duel != null && duel.isActive) {
             String cmd = event.getMessage().toLowerCase();
             if (!cmd.startsWith("/draw")) {
                 event.setCancelled(true);
