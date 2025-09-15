@@ -1,4 +1,10 @@
 name: PlexDuels
-version: '1.0'
+version: ${version}
 main: dev.kai.PlexDuels
-api-version: '1.21'
+api-version: 1.21
+author: [ C0dingKai ]
+commands:
+  duel:
+  setduel:
+  draw:
+  leave:
