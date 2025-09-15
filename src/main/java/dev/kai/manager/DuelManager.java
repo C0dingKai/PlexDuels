@@ -88,6 +88,7 @@ public class DuelManager {
         public boolean isActive = true;
         public Player winner, loser;
         public boolean player1Draw = false, player2Draw = false;
+        private BukkitRunnable graceTask;
 
         public Duel(Player p1, Player p2, Location old1, Location old2) {
             this.player1 = p1;
@@ -104,27 +105,36 @@ public class DuelManager {
                 player2.playSound(player2.getLocation(), Sound.MUSIC_DISC_RELIC, 1f, 1f);
             });
 
-            new BukkitRunnable() {
+            graceTask = new BukkitRunnable() {
                 int time = 30;
                 @Override
                 public void run() {
                     if (time <= 0 || (!player1.isOnline() && !player2.isOnline())) {
-                        player1.teleport(pos1);
-                        player2.teleport(pos2);
-
-                        player1.stopSound(Sound.MUSIC_DISC_RELIC);
-                        player2.stopSound(Sound.MUSIC_DISC_RELIC);
-
-                        DuelManager.getInstance().activeDuels.remove(player1.getUniqueId());
-                        DuelManager.getInstance().activeDuels.remove(player2.getUniqueId());
-                        cancel();
+                        endGracePeriod();
                         return;
                     }
                     player1.sendActionBar(ChatColor.RED + "Time left: " + time + "s");
                     player2.sendActionBar(ChatColor.RED + "Time left: " + time + "s");
                     time--;
                 }
-            }.runTaskTimer(PlexDuels.getInstance(), 0L, 20L);
+            };
+            graceTask.runTaskTimer(PlexDuels.getInstance(), 0L, 20L);
+        }
+
+        public void endGracePeriod() {
+            if (graceTask != null) {
+                graceTask.cancel();
+                graceTask = null;
+            }
+
+            player1.teleport(pos1);
+            player2.teleport(pos2);
+
+            player1.stopSound(Sound.MUSIC_DISC_RELIC);
+            player2.stopSound(Sound.MUSIC_DISC_RELIC);
+
+            DuelManager.getInstance().activeDuels.remove(player1.getUniqueId());
+            DuelManager.getInstance().activeDuels.remove(player2.getUniqueId());
         }
 
         public boolean isInGracePeriod() { return !isActive && winner != null; }
