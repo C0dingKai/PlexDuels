@@ -32,16 +32,12 @@ public class LeaveCommand implements CommandExecutor {
             return true;
         }
 
-        // TODO: Fix so that if a player leaves during grace period, the other player should't leave
 
-        duel.endGracePeriod();
 
         Player opponent = duel.getOpponent(player);
+        manager.leaveDuel(player);
 
         player.sendMessage(ColorUtil.parse("<gray>You left the duel."));
-        if (opponent != null && opponent.isOnline()) {
-            opponent.sendMessage(ColorUtil.parse("<gray>" + player.getName() + " left the duel. The duel has ended."));
-        }
 
         return true;
     }
