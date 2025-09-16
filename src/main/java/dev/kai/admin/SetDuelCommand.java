@@ -31,18 +31,18 @@ public class SetDuelCommand implements CommandExecutor {
         }
 
         if (args.length != 1) {
-            player.sendMessage("Usage: /setduel <1|2>");
+            player.sendMessage("Usage: /setduel <A|B>");
             return true;
         }
 
         switch (args[0]) {
-            case "1" -> {
+            case "A" -> {
                 DuelManager.getInstance().setDuelLocation1(player.getLocation());
-                player.sendMessage(ColorUtil.parse("<green>Duel spawn 1 set!"));
+                player.sendMessage(ColorUtil.parse("<green>Duel spawn A set!"));
             }
-            case "2" -> {
+            case "B" -> {
                 DuelManager.getInstance().setDuelLocation2(player.getLocation());
-                player.sendMessage(ColorUtil.parse("<green>Duel spawn 2 set!"));
+                player.sendMessage(ColorUtil.parse("<green>Duel spawn B set!"));
             }
         }
 
