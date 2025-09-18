@@ -1,5 +1,6 @@
 package dev.kai.listener;
 
+import dev.kai.PlexDuels;
 import dev.kai.manager.DuelManager;
 import dev.kai.manager.DuelManager.Duel;
 import dev.kai.utility.ColorUtil;
@@ -11,7 +12,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class DuelCommandListener implements Listener {
 
-    private final JavaPlugin plugin;
+    private JavaPlugin plugin = PlexDuels.getInstance();
     public DuelCommandListener(JavaPlugin plugin) {
         this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -26,7 +27,7 @@ public class DuelCommandListener implements Listener {
             String cmd = event.getMessage().toLowerCase();
             if (!cmd.startsWith("/draw")) {
                 event.setCancelled(true);
-                player.sendMessage(ColorUtil.parse("<red>You cannot use commands during a duel, except /draw!"));
+                player.sendMessage(ColorUtil.parse("<#FC2A00><bold>DUELS <gray><!bold>➡<white>This command isn't allowed during a duel!"));
             }
         }
     }
