@@ -17,7 +17,10 @@ public class DrawCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) return true;
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage("Only players can execute this command.");
+            return true;
+        }
 
         DuelManager manager = DuelManager.getInstance();
         Duel duel = manager.getDuel(player);
@@ -40,7 +43,7 @@ public class DrawCommand implements CommandExecutor {
         } else {
             player.sendMessage(ColorUtil.parse("<gray>Waiting for your opponent to draw..."));
             if (opponent != null && opponent.isOnline())
-                opponent.sendMessage(ColorUtil.parse("<#278EF5>" + player.getName() + " <gray>has requested a draw. Type /draw to accept."));
+                opponent.sendMessage(ColorUtil.parse("<#278EF5>" + player.getName() + " <gray>has requested a draw."));
 
 
         }

@@ -17,8 +17,10 @@ public class LeaveCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) return true;
-
+        if (!(sender instanceof Player player)) {
+            sender.sendMessage("Only players can execute this command.");
+            return true;
+        }
         DuelManager manager = DuelManager.getInstance();
         Duel duel = manager.getDuel(player);
 
