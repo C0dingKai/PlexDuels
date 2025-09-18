@@ -1,7 +1,10 @@
 package dev.kai.manager;
 
 import dev.kai.PlexDuels;
+import dev.kai.utility.ColorUtil;
 import dev.kai.utility.LocationUtil;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.*;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
@@ -22,7 +25,11 @@ public class DuelManager {
 
     private final Map<UUID, UUID> duelRequests = new HashMap<>();
     private final Map<UUID, Duel> activeDuels = new HashMap<>();
+    @Getter
+    @Setter
     private Location duelLocation1;
+    @Getter
+    @Setter
     private Location duelLocation2;
 
     private DuelManager() {}
@@ -30,11 +37,6 @@ public class DuelManager {
     public void addRequest(UUID target, UUID challenger) { duelRequests.put(target, challenger); }
     public UUID getRequest(UUID target) { return duelRequests.get(target); }
     public void removeRequest(UUID target) { duelRequests.remove(target); }
-
-    public void setDuelLocation1(Location loc) { duelLocation1 = loc; }
-    public void setDuelLocation2(Location loc) { duelLocation2 = loc; }
-    public Location getDuelLocation1() { return duelLocation1; }
-    public Location getDuelLocation2() { return duelLocation2; }
 
     public void load(FileConfiguration config) {
         Location loc1 = LocationUtil.loadLocation(config, "duel.pos1");
@@ -138,8 +140,8 @@ public class DuelManager {
                         endGracePeriod();
                         return;
                     }
-                    if (p1Online) player1.sendActionBar(ChatColor.RED + "Time left: " + time + "s");
-                    if (p2Online) player2.sendActionBar(ChatColor.RED + "Time left: " + time + "s");
+                    if (p1Online) player1.sendActionBar(ColorUtil.parse("<gray>Time left: <#FC2A00>" + time + "s<gray>.."));
+                    if (p2Online) player2.sendActionBar(ColorUtil.parse("<gray>Time left: <#FC2A00>" + time + "s<gray>.."));
                     time--;
                 }
             };

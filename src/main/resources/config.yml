@@ -1,0 +1,30 @@
+############################################
+# Duel Plugin Configuration File
+#Reminder: The Colors are made with MiniMessage!
+#Made by C0dingKai
+#Discord.gg/PlexStudios
+############################################
+
+# Duel Settings
+duel:
+  timer: 30
+  actionbar: "&cTime left: {time}s"
+  music: "MUSIC_DISC_RELIC"
+
+# Messages
+messages:
+  usage: '<red>Usage: /duel <player|accept|deny>'
+  self-duel: "<red>You cannot duel yourself."
+  request-sent: "<gray>You sent a duel request to <red>{player}"
+  request-received: "<red>{player} <gray>has sent you a duel request!"
+  request-info: "<gray>Type <green>/duel accept <gray>to fight or <red>/duel deny <gray>to decline."
+  accepted-challenger: "<green>{player} accepted your duel!"
+  accepted-target: "<green>You accepted the duel request from {player}!"
+  denied-challenger: "<red>{player} denied your duel request."
+  denied-target: "<gray>You denied the duel request."
+  duel-start: "<gray>Duel started! Use /leave to exit or fight until someone dies."
+
+# Sounds
+sounds:
+  request-denied: "ENTITY_VILLAGER_NO"
+  request-received: "BLOCK_NOTE_BLOCK_CHIME"
