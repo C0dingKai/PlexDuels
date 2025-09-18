@@ -3,7 +3,9 @@ package dev.kai.listener;
 import dev.kai.manager.DuelManager;
 import dev.kai.manager.DuelManager.Duel;
 import dev.kai.utility.ColorUtil;
+import net.kyori.adventure.title.Title;
 import org.bukkit.GameMode;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -23,6 +25,7 @@ public class DuelListener implements Listener {
         Player dead = event.getEntity();
         DuelManager manager = DuelManager.getInstance();
 
+
         if (!manager.isInDuel(dead)) return;
 
         Duel duel = manager.getDuel(dead);
@@ -37,9 +40,16 @@ public class DuelListener implements Listener {
         duel.startGracePeriod();
 
         if (winner != null && winner.isOnline()) {
-            winner.sendMessage(ColorUtil.parse("<green>You won the duel against " + dead.getName() + "!"));
+           winner.showTitle(Title.title(
+                   ColorUtil.parse("<#00FC22>You won!"),
+                   ColorUtil.empty()
+           ));
         }
-        dead.sendMessage(ColorUtil.parse("<red>You lost the duel against " + winner.getName() + "!"));
+        dead.playSound(dead.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1f, 1f);
+        dead.showTitle(Title.title(
+                ColorUtil.parse("<#FC2A00>You lost"),
+                ColorUtil.empty()
+        ));
         dead.setGameMode(GameMode.SPECTATOR);
     }
 }
