@@ -66,9 +66,8 @@ public class DuelCommand implements CommandExecutor, TabCompleter {
 
         duelManager.addRequest(target.getUniqueId(), challenger.getUniqueId());
 
-        challenger.sendMessage(ColorUtil.parse("<gray>You sent a duel request to <red>" + target.getName()));
-        target.sendMessage(ColorUtil.parse("<red>" + challenger.getName() + " <gray>has sent you a duel request!"));
-        target.sendMessage(ColorUtil.parse("<gray>Type <green>/duel accept <gray>to fight or <red>/duel deny <gray>to decline."));
+        challenger.sendMessage(ColorUtil.parse("<#FC2A00><bold>DUELS <gray><!bold>➡ <white>You've sent a duel request to <red>" + target.getName()));
+        target.sendMessage(ColorUtil.parse("<#FC2A00><bold>DUELS <gray><!bold>➡ <white>You've received a duel request from <red>" + challenger.getName()));
         target.playSound(target.getLocation(), Sound.BLOCK_NOTE_BLOCK_CHIME, 1, 1);
     }
 
@@ -92,9 +91,6 @@ public class DuelCommand implements CommandExecutor, TabCompleter {
         target.sendMessage(ColorUtil.parse("<green>You accepted the duel request from " + challenger.getName() + "!"));
 
         duelManager.startDuel(challenger, target);
-
-        challenger.sendMessage(ColorUtil.parse("<gray>Duel started! Use /leave to exit or fight until someone dies."));
-        target.sendMessage(ColorUtil.parse("<gray>Duel started! Use /leave to exit or fight until someone dies."));
     }
 
     private void handleDeny(Player target) {
